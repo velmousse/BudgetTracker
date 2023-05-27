@@ -3,10 +3,142 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BudgetTracker"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:BudgetTracker" xmlns:dvc="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Budget Tracker v0.1" Height="800" Width="1050" ResizeMode="NoResize">
     <Grid>
+        <!-- Toolbar -->
+        <Menu Height="18" VerticalAlignment="Top">
+            <MenuItem Header="Fichier">
+                <MenuItem Header="Charger à partir d'un .csv" />
+                <MenuItem Header="Configuration" />
+                <Separator />
+                <MenuItem Header="À propos" />
+            </MenuItem>
+        </Menu>
 
+        <!-- Main application view -->
+        <Grid Margin="0,18,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.9*" />
+                <RowDefinition Height="0.1*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Dataset cell -->
+            <Grid>
+                <DataGrid>
+                    
+                </DataGrid>
+            </Grid>
+            
+            <!-- Add data cell -->
+            <GroupBox Grid.Row="1" Header="Ajout de données">
+                <Grid>
+                    <DatePicker x:Name="dpDate" HorizontalAlignment="Left" Margin="10,0,0,0" 
+                                VerticalAlignment="Center" Width="110" Height="25"/>
+                    <xctk:WatermarkTextBox x:Name="txtReason" HorizontalAlignment="Left" Margin="125,0,0,0"
+                                           VerticalAlignment="Center" Width="210" Height="25" 
+                                           Watermark="Raison" />
+                    <xctk:WatermarkTextBox x:Name="txtAmount" HorizontalAlignment="Left" Margin="340,0,0,0"
+                                           VerticalAlignment="Center" Width="100" Height="25"
+                                           Watermark="Montant" PreviewTextInput="txtAmount_PreviewTextInput" />
+                    <Button x:Name="btnSendData" HorizontalAlignment="Left" Margin="445,0,0,0"
+                            VerticalAlignment="Center" Width="58" Height="25" Content="Envoyer" />
+                </Grid>
+            </GroupBox>
+
+            <!-- Data visualization cells -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.375*" />
+                    <RowDefinition Height="0.375*" />
+                    <RowDefinition Height="0.25*" />
+                </Grid.RowDefinitions>
+
+                <!-- Mensual variation chart -->
+                <GroupBox Grid.Column="0" Header="Variation mensuelle">
+                    <dvc:Chart>
+                        
+                    </dvc:Chart>
+                </GroupBox>
+
+                <!-- Annual variation chart -->
+                <GroupBox Grid.Row="1" Header="Variation annuelle">
+                    <dvc:Chart>
+                        
+                    </dvc:Chart>
+                </GroupBox>
+
+                <!-- Graphical stats cell -->
+                <GroupBox Grid.Row="2" Header="Statistiques">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="24" />
+                        </Grid.RowDefinitions>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="0" Grid.Column="0" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="0" Grid.Column="1" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="0" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="1" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="2" Grid.Column="0" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="2" Grid.Column="1" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.Column="0" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.Column="1" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="4" Grid.Column="0" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="4" Grid.Column="1" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="5" Grid.Column="0" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="5" Grid.Column="1" />
+
+                        <Label TextBlock.FontWeight="Bold" Grid.Row="0">Variation mensuelle :</Label>
+                        <Label TextBlock.FontWeight="Bold" Grid.Row="1">Variation annuelle :</Label>
+                        <Label TextBlock.FontWeight="Bold" Grid.Row="2">Dépense moyenne mensuelle :</Label>
+                        <Label TextBlock.FontWeight="Bold" Grid.Row="3">Dépense moyenne annuelle :</Label>
+                        <Label TextBlock.FontWeight="Bold" Grid.Row="4">Somme - 1 mois :</Label>
+                        <Label TextBlock.FontWeight="Bold" Grid.Row="5">Somme actuelle:</Label>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+
+            <!-- Parameters cell -->
+            <GroupBox Grid.Row="1" Grid.Column="1" Header="Paramètres">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="0.5*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.33*" />
+                        <ColumnDefinition Width="0.33*" />
+                        <ColumnDefinition Width="0.33*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label>Année :</Label>
+                    <ComboBox Grid.Row="1" Margin="5,2,5,2"></ComboBox>
+
+                    <Label Grid.Column="1">Mois :</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="5,2,5,2"></ComboBox>
+
+                    <CheckBox Grid.Column="2" VerticalAlignment="center">Annuel</CheckBox>
+                    <Button Grid.Row="1" Grid.Column="2" Margin="20,2,20,2">Soumettre</Button>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </Window>

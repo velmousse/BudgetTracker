@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BudgetTracker.Data;
+using BudgetTracker.Data.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +20,23 @@ namespace BudgetTracker {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        public MainWindow() {
+        private readonly BudgetTrackerDbContext context;
+        private readonly IEntryRepository entryRepository;
+
+        public MainWindow(BudgetTrackerDbContext context, IEntryRepository entryRepository) {
+            this.context = context;
+            this.entryRepository = entryRepository;
             InitializeComponent();
+        }
+
+
+        /*
+         * Data input section
+         */
+
+        private void txtAmount_PreviewTextInput(object sender, TextCompositionEventArgs e) {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && e.Text != "." && e.Text != ",") 
+                e.Handled = true;
         }
     }
 }
